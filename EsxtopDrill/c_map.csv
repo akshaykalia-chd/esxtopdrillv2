@@ -1,0 +1,66 @@
+Counter_Group,Counter,Counter_type,Counter_Scope,Ok_val,Warning_val,Critical_val,Message
+Memory,Memory Overcommit (1 Minute Avg),Num,sys,0,1,2,Memory overcommitment detected. Check if Kernel State is reporting anomalies. 
+Memory,Memory Overcommit (5 Minute Avg),Num,sys,0,1,2,Memory overcommitment detected. Check if Kernel State is reporting anomalies. 
+Memory,Memory Overcommit (15 Minute Avg),Num,sys,0,1,2,Memory overcommitment detected. Check if Kernel State is reporting anomalies. 
+Memory,Kernel State,Num,sys,0,1,1,Kernel State not High. Memory reclamation strategies would have kicked in. Review anomalies with VM ballooning and Swapping stats. 
+Physical Cpu Load,Cpu Load (1 Minute Avg),Num,sys,0.5,0.8,1,Heavy CPU load on the host. Review anomalies with VM %Used to detect heavy hitters. 
+Physical Cpu Load,Cpu Load (5 Minute Avg),Num,sys,0.5,0.8,1,Heavy CPU load on the host. Review anomalies with VM %Used to detect heavy hitters. 
+Physical Cpu Load,Cpu Load (15 Minute Avg),Num,sys,0.5,0.8,1,Heavy CPU load on the host. Review anomalies with VM %Used to detect heavy hitters. 
+Vcpu,% Used,Num,obj,50,80,100,Heavy demand by the vCPU. 
+Vcpu,% VmWait,Num,obj,5,10,20,vCPU is spending time waiting on Network or Storage IO to complete. Review anomalies with storage and Network parameters. 
+Vcpu,% Ready,Num,obj,1,5,10,"vCPU is spending time waiting on physical CPU to be available. System consolidation Ratio may be too high, or system is hosting many Monster VMs. "
+Vcpu,% CoStop,Num,obj,0.1,1,3,"vCPU blocked from processing due to relaxed core scheduling. System consolidation Ratio may be too high, or system is hosting many Monster VMs. "
+Vcpu,% Max Limited,Num,obj,0.1,1,2,vCPU blocked from processing due to vCPU limits. Resource pools in use or explicit  CPU limit is set on the VM.  
+Vcpu,% Swap Wait,Num,obj,0.1,1,2,vCPU is waiting on SWAP action to complete. Possible memory overcommitment. 
+Vcpu,Switches/sec,Num,obj,250,500,1000,Heavy context switching. Guest OS configuration not optimal for using multi-threading.
+Vcpu,Migrates/sec,Num,obj,100,200,400,Heavy context switching. Guest OS configuration not optimal for using multi-threading.
+Vcpu,Quantum Expires/sec,Num,obj,0,5,10,Possible CPU lockup. Rogue application or driver within Guest OS.
+Vcpu,Alloc Min,Num,obj,0,1,2,CPU reservation detected. Make sure HA admission control is configured to factor this in. 
+Vcpu,Alloc Max,Num,obj,-1,0,1,vCPU blocked from processing due to vCPU limits. Resource pools in use or explicit  CPU limit is set on the VM.  
+Vcpu,% Demand,Num,obj,50,80,100,Heavy demand by the vCPU. 
+Group Memory,Alloc Min,Num,obj,0,1,1,Memory reservation detected. Make sure HA admission control is configured to factor this in.
+Group Memory,Alloc Max,Num,obj,-1,1,1,Memory limit detected. Resource pools in use or explicit Memory limit is set on the VM.
+Group Memory,Numa Rebalance Count Delta,Num,obj,1,5,10,VM is not configured to use NUMA optimally. Check vCPU and Memory configuration of the VM. Alight it to ESXi NUMA topology.
+Group Memory,Numa % Local,Num,obj_hig,90,80,50,VM is not configured to use NUMA optimally. Check vCPU and Memory configuration of the VM. Alight it to ESXi NUMA topology.
+Group Memory,Memctl?,Bool,obj,Y,N,,Memory control/Ballooning driver is disabled. VM will use swapping under memory contention condition. This is not recommended by VMware
+Group Memory,Memctl Target MBytes,Num,obj,1,10,20,Ballooning is active. Possible memory limits or heavy memory overcommitment
+Group Memory,Memctl Max MBytes,Num,obj,1,10,20,Ballooning is/was active. Possible memory limits or heavy memory overcommitment
+Group Memory,Swapped MBytes,Num,obj,1,10,20,Swapping is/was active. Possible memory limits or heavy memory overcommitment
+Group Memory,Swap Target MBytes,Num,obj,1,10,20,Swapping is active. Possible memory limits or heavy memory overcommitment
+Group Memory,Swap Read MBytes/sec,Num,obj,0.1,1,2,Swapping is active. Possible memory limits or heavy memory overcommitment
+Group Memory,Swap Written MBytes/sec,Num,obj,0.1,1,2,Swapping is active. Possible memory limits or heavy memory overcommitment
+Physical Disk,Adapter Q Depth,Num_cal,obj_hig,2048,1024,256,Possible HBA  overload
+Physical Disk Adapter,Commands/sec,Num_cal,obj,2500,5000,10000,Possible HBA  overload
+Physical Disk SCSI Device,Queued Commands,Num,obj,1,10,20,Storage IO queued in software may induce high Average Kernel MilliSec.
+Physical Disk SCSI Device,% Used,Num,obj,1,50,100,Storage IO queued in software may induce high Average Kernel MilliSec.
+Physical Disk SCSI Device,Commands/sec,Num,obj,2500,5000,10000,Heavy IO on the path
+Physical Disk SCSI Device,Average Driver MilliSec/Command,Num,obj,5,10,20,Latency observed between HBA and storage
+Physical Disk SCSI Device,Average Kernel MilliSec/Command,Num,obj,0.5,1,5,"Latency observed due to Kernel action. Possible configuration issue, HBA overload or SAN outage"
+Physical Disk SCSI Device,Average Guest MilliSec/Command,Num,obj,5,11,25,Latency observed by Guest OS
+Physical Disk SCSI Device,Average Queue MilliSec/Command,Num,obj,0.5,1,5,Latency due to Storage IO queued in software
+Physical Disk SCSI Device,Failed Commands/sec,Num,obj,1,10,100,IO Failures. Possible Storage outage or driver issues
+Physical Disk SCSI Device,Aborts/sec,Num,obj,1,10,100,IO Aborts. Possible Storage outage or driver issues
+Physical Disk SCSI Device,Resets/sec,Num,obj,1,10,100,IO Resets. Possible Storage outage or driver issues
+Physical Disk Path,Commands/sec,Num,obj,1000,2000,5000,Heavy IO on the path
+Physical Disk Path,Conflicts/sec,Num,obj,1,32,64,Have reservation conflicts 
+Physical Disk Path,Average Driver MilliSec/Command,Num,obj,5,10,20,Latency observed between HBA and storage
+Physical Disk Path,Average Kernel MilliSec/Command,Num,obj,0.5,1,5,"Latency observed due to Kernel action. Possible configuration issue, HBA overload or SAN outage"
+Physical Disk Path,Average Guest MilliSec/Command,Num,obj,5,11,25,Latency observed by Guest OS
+Physical Disk Path,Average Queue MilliSec/Command,Num,obj,0.5,1,5,Latency due to Storage IO queued in software
+Physical Disk Path,Failed Commands/sec,Num,obj,1,10,100,IO Failures. Possible Storage outage or driver issues
+Physical Disk Path,Aborts/sec,Num,obj,1,10,100,IO Aborts. Possible Storage outage or driver issues
+Physical Disk Path,Resets/sec,Num,obj,1,10,100,IO Resets. Possible Storage outage or driver issues
+Virtual Disk,FailedIOs,Num,obj,1,10,100,IO Failures. Possible Storage outage or driver issues
+Virtual Disk,Commands/sec,Num,obj,200,500,1000,Heavy IO by the VM/vmdk
+Virtual Disk,Average MilliSec/Read,Num,obj,5,10,20,Latency observed by Guest OS
+Virtual Disk,Average MilliSec/Write,Num,obj,5,10,20,Latency observed by Guest OS
+Network Port,Packets Transmitted/sec,Num,obj,2000,5000,10000,Heavy Network I/O
+Network Port,Packets Received/sec,Num,obj,2000,5000,10000,Heavy Network I/O
+Network Port,% Outbound Packets Dropped,Num,obj,1,10,20,Heavy Network Packet drops
+Network Port,% Received Packets Dropped,Num,obj,1,10,20,Heavy Network Packet drops
+Network Port,Multicast Packets Transmitted/sec,Num,obj,1000,5000,20000,Heavy Multicast traffic 
+Network Port,Multicast Packets Received/sec,Num,obj,1000,5000,20000,Heavy Multicast traffic 
+Network Port,Broadcast Packets Transmitted/sec,Num,obj,1000,5000,20000,Heavy Broadcast traffic 
+Network Port,Broadcast Packets Received/sec,Num,obj,1000,5000,20000,Heavy Broadcast traffic 
+Interrupt Cookie,Interrupts/second,Num,obj,5000,10000,20000,Heavy usage of interrupt
+PCPU Power State,% of aperf/mperf,Num,obj_hig,100,80,50,Inefficient power management policy
