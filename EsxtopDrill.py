@@ -81,7 +81,7 @@ class EsxtopDrill(wx.Frame):
         try:
             self.load_data()
         except:
-            print(datetime.now(), 'Error Lading the CSV file')
+            print(datetime.now(), 'Error Loading the CSV file')
         self.choice.Clear()
         self.choice.AppendItems(self.cg_list)
         self.choice_1.Clear()
@@ -232,3 +232,4 @@ app = wx.App()
 EsxtopDrill()
 app.MainLoop()
 app.ExitMainLoop()
+exit()
