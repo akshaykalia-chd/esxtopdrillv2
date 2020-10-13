@@ -89,27 +89,30 @@ def filer_counter(cg_filtered_data_frame, c_selection, cg_selection, working_dir
     col_name_df = col_name_df.drop([0])
     c_gn_c_df = col_name_df[0].str.split(("\\"), expand=True)
     column_list = list()
-    column_list.extend(c_gn_c_df.index[c_gn_c_df[4] == c_selection].tolist())
-    column_list.sort(reverse=False)
-    col_name = list()
-    col_name.append(time_se)
-    i = 1
-    for Col in column_list:
-        col_name.insert(i, col_name_df[0][Col])
-        i = i + 1
-    out_df = out_df[col_name]
-    outfile = str(cg_selection + "-" + c_selection + "-" + str(int(time.time())) + ".csv")
-    outfile = os.path.join(working_dir, cg_selection, outfile)
     try:
-        out_df.to_csv(outfile, index=False)
-    except (FileNotFoundError, OSError):
+        column_list.extend(c_gn_c_df.index[c_gn_c_df[4] == c_selection].tolist())
+        column_list.sort(reverse=False)
+        col_name = list()
+        col_name.append(time_se)
+        i = 1
+        for Col in column_list:
+            col_name.insert(i, col_name_df[0][Col])
+            i = i + 1
+        out_df = out_df[col_name]
         outfile = str(cg_selection + "-" + c_selection + "-" + str(int(time.time())) + ".csv")
-        outfile = outfile.replace("/", "-")
-        outfile = outfile.replace("?", " ")
         outfile = os.path.join(working_dir, cg_selection, outfile)
-        out_df.to_csv(outfile, index=False)
-    print(datetime.now(), " Generated: ", outfile)
-    return out_df
+        try:
+            out_df.to_csv(outfile, index=False)
+        except (FileNotFoundError, OSError):
+            outfile = str(cg_selection + "-" + c_selection + "-" + str(int(time.time())) + ".csv")
+            outfile = outfile.replace("/", "-")
+            outfile = outfile.replace("?", " ")
+            outfile = os.path.join(working_dir, cg_selection, outfile)
+            out_df.to_csv(outfile, index=False)
+        print(datetime.now(), " Generated: ", outfile)
+        return out_df
+    except KeyError:
+        return
 
 
 # ------------------------------------------------------------------------------------

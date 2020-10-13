@@ -31,7 +31,13 @@ def fault_finder(data_frame, working_dir):
             counters.append(c_map_df['Counter'][index])
         for counter in counters:
             temp_df2 = filer_counter(temp_df1, counter, cg, working_dir)
-            temp_df2 = temp_df2.drop(columns=['(PDH-CSV 4.0) (UTC)(0)'])
+            try:
+                temp_df2 = temp_df2.drop(columns=['(PDH-CSV 4.0) (UTC)(0)'])
+            except AttributeError:
+                print(datetime.now(),
+                      ' Missing counter', counter,
+                      '.The input csv is not collected using -a switch of esxtop. Moving on')
+                continue
 
             threshold = c_map_df.iloc[np.where(c_map_df.Counter_Group.values == cg)]
             threshold = threshold.iloc[np.where(threshold.Counter.values == counter)]
@@ -84,7 +90,8 @@ def fault_finder(data_frame, working_dir):
                                                             max_avg_count_df.loc['Count_Critical']
                 except ValueError:
                     print(datetime.now(),
-                          ' Missing counter. The input csv is not collected using -a switch of esxtop. Moving on')
+                          ' Missing counter', counter,
+                          '.The input csv is not collected using -a switch of esxtop. Moving on')
 
                 if counter_scope != 'obj_hig':
                     for col in col_list:
@@ -208,7 +215,8 @@ def fault_finder(data_frame, working_dir):
                                         critical_threshold.append(critical_val)
                         except:
                             print(datetime.now(),
-                                  ' Missing counter. The input csv is not collected using -a switch of esxtop. Moving on')
+                                  ' Missing counter', counter,
+                                  '.The input csv is not collected using -a switch of esxtop. Moving on')
 
     object_name = pd.Series(object_name, name='Object')
     counter_name = pd.Series(counter_name, name='Counter')
