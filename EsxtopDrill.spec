@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['EsxtopDrill.py'],
+a = Analysis(['EsxtopDrill.pyw'],
              pathex=['/Users/akalia/git/esxtopdrillv2'],
              binaries=[],
              datas=[],
